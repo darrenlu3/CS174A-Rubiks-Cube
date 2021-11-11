@@ -4,6 +4,24 @@ const {
     Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene,
 } = tiny;
 
+class Cube extends Shape {
+    constructor() {
+        super("position", "normal",);
+        // Loop 3 times (for each axis), and inside loop twice (for opposing cube sides):
+        this.arrays.position = Vector3.cast(
+            [-1, -1, -1], [1, -1, -1], [-1, -1, 1], [1, -1, 1], [1, 1, -1], [-1, 1, -1], [1, 1, 1], [-1, 1, 1],
+            [-1, -1, -1], [-1, -1, 1], [-1, 1, -1], [-1, 1, 1], [1, -1, 1], [1, -1, -1], [1, 1, 1], [1, 1, -1],
+            [-1, -1, 1], [1, -1, 1], [-1, 1, 1], [1, 1, 1], [1, -1, -1], [-1, -1, -1], [1, 1, -1], [-1, 1, -1]);
+        this.arrays.normal = Vector3.cast(
+            [0, -1, 0], [0, -1, 0], [0, -1, 0], [0, -1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 0],
+            [-1, 0, 0], [-1, 0, 0], [-1, 0, 0], [-1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0],
+            [0, 0, 1], [0, 0, 1], [0, 0, 1], [0, 0, 1], [0, 0, -1], [0, 0, -1], [0, 0, -1], [0, 0, -1]);
+        // Arrange the vertices into a square shape in texture space too:
+        this.indices.push(0, 1, 2, 1, 3, 2, 4, 5, 6, 5, 7, 6, 8, 9, 10, 9, 11, 10, 12, 13,
+            14, 13, 15, 14, 16, 17, 18, 17, 19, 18, 20, 21, 22, 21, 23, 22);
+    }
+}
+
 export class Assignment3 extends Scene {
     constructor() {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
@@ -11,40 +29,16 @@ export class Assignment3 extends Scene {
 
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
-            torus: new defs.Torus(15, 15),
-            torus2: new defs.Torus(3, 15),
-            sphere: new defs.Subdivision_Sphere(4),
-            circle: new defs.Regular_2D_Polygon(1, 15),
-            // TODO:  Fill in as many additional shape instances as needed in this key/value table.
-            //        (Requirement 1)
-            planet1: new (defs.Subdivision_Sphere.prototype.make_flat_shaded_version())(2),
-            planet2: new defs.Subdivision_Sphere(3),
-            moon: new (defs.Subdivision_Sphere.prototype.make_flat_shaded_version())(1),
+            'cube': new Cube(),
+
         };
 
         // *** Materials
         this.materials = {
             test: new Material(new defs.Phong_Shader(),
                 {ambient: .4, diffusivity: .6, color: hex_color("#ffffff")}),
-            test2: new Material(new Gouraud_Shader(),
-                {ambient: .4, diffusivity: .6, color: hex_color("#992828")}),
-            ring: new Material(new Ring_Shader()),
-            sun: new Material(new defs.Phong_Shader(),
-                {ambient: 1, diffusivity:0, specularity:0}),
-            planet1: new Material(new defs.Phong_Shader(),
-                {ambient: 0, diffusivity:1, specularity:0, color: hex_color("#808080")}),
-            planet2_phong: new Material(new defs.Phong_Shader(),
-                {ambient: 0, diffusivity:0.2, specularity:1, color: hex_color("#80FFFF")}),
-            planet2_gouraud: new Material(new Gouraud_Shader(),
-                {ambient: 0, diffusivity:0.2, specularity:1, color: hex_color("#80FFFF")}),
-            planet3: new Material(new defs.Phong_Shader(),
-                {ambient: 0, diffusivity:1, specularity:1, color: hex_color("#B08040")}),
-            planet4: new Material(new defs.Phong_Shader(),
-                {ambient: 0, diffusivity:0.6, specularity:1, color: hex_color("#ADD8E6")}),
-            moon: new Material(new defs.Phong_Shader(),
-                {ambient: 0, diffusivity:0.6, specularity:0.8, color: hex_color("#FFFFFF")}),
-            // TODO:  Fill in as many additional material objects as needed in this key/value table.
-            //        (Requirement 4)
+            test2: new Material(new defs.Phong_Shader(),
+                {ambient: .4, diffusivity: .6, color: hex_color("#ff0000")}),
         }
 
         this.initial_camera_location = Mat4.look_at(vec3(0, 10, 20), vec3(0, 0, 0), vec3(0, 1, 0));
@@ -54,13 +48,30 @@ export class Assignment3 extends Scene {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
         this.key_triggered_button("View solar system", ["Control", "0"], () => this.attached = () => this.start);
         this.new_line();
-        this.key_triggered_button("Attach to planet 1", ["Control", "1"], () => this.attached = () => this.planet_1);
-        this.key_triggered_button("Attach to planet 2", ["Control", "2"], () => this.attached = () => this.planet_2);
-        this.new_line();
-        this.key_triggered_button("Attach to planet 3", ["Control", "3"], () => this.attached = () => this.planet_3);
-        this.key_triggered_button("Attach to planet 4", ["Control", "4"], () => this.attached = () => this.planet_4);
-        this.new_line();
-        this.key_triggered_button("Attach to moon", ["Control", "m"], () => this.attached = () => this.moon);
+}
+
+    draw_cube(context, program_state, model_transform, index){
+        let base = model_transform;
+        for (let i = 0; i < 3; i++){
+            let column = base.times(Mat4.translation(0,i*2,0));
+            for (let j = 0; j < 3; j++){
+                let row = column.times(Mat4.translation(j*2,0,0));
+                for (let k = 0; k < 3; k++){
+                    let box_color = color(i,j,k,1.0);
+                    this.shapes.cube.draw(context,program_state,row,this.materials.test.override(box_color));
+                    row = row.times(Mat4.translation(0,0,2));
+                }
+                
+            }
+        }
+        //this.shapes.cube.draw(context, program_state, model_transform, this.materials.test);
+
+    }
+
+    paint_cube(context, program_state, model_transform, index){
+        let base = model_transform;
+        base = base.times(Mat4.translation(0,-1.1,0)).times(Mat4.scale(1,0,1));
+        this.shapes.cube.draw(context, program_state, base, this.materials.test2);
     }
 
     display(context, program_state) {
@@ -81,65 +92,15 @@ export class Assignment3 extends Scene {
         // TODO: Lighting (Requirement 2)
         const light_position = vec4(0, 5, 5, 1);
         // The parameters of the Light are: position, color, size
-        //program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 1000)];
+        program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 1000)];
 
         // TODO:  Fill in matrix operations and drawing code to draw the solar system scene (Requirements 3 and 4)
         const t = program_state.animation_time / 1000, dt = program_state.animation_delta_time / 1000;
         const yellow = hex_color("#fac91a");
-        let model_transform = Mat4.identity();
-
-        // Creating the sun
-        let sunPosition = Mat4.identity();
-        var interval = Math.sin(t/2);
-        var sunSize = (2+interval);
-        sunPosition = sunPosition.times(Mat4.scale(sunSize,sunSize,sunSize));
-        var sunColor = tiny.color(1, 0.5+0.5*interval, 0.5+0.5*interval,1);
-        const sunlight = vec4(0, 0, 0, 1);
-        program_state.lights = [new Light(sunlight, sunColor, 10**sunSize)];
-        this.shapes.sphere.draw(context, program_state, sunPosition, this.materials.sun.override({color:sunColor}));
-        sunPosition = Mat4.identity();
-
-
-        // TODO: Create Planets (Requirement 1)
-        //Planet 1
-        let planet1 = sunPosition.times(Mat4.rotation(t,0,1,0)).times(Mat4.translation(5,0,0));
-        this.shapes.planet1.draw(context, program_state, planet1, this.materials.planet1);
+        let model_transform = Mat4.identity().times(Mat4.translation(-1,-1,-1));
         
-        //Planet2
-        let planet2 = sunPosition.times(Mat4.rotation(0.75*t,0,1,0)).times(Mat4.translation(8,0,0));
-        if (Math.floor(t)%2 == 0){
-            this.shapes.planet2.draw(context, program_state, planet2, this.materials.planet2_phong);
-        }
-        else{
-            this.shapes.planet2.draw(context, program_state, planet2, this.materials.planet2_gouraud);
-        } //TODO FIND OUT HOW TO DO GOURAUD
-
-        //Planet3
-        let planet3 = sunPosition.times(Mat4.rotation(0.5*t,0,1,0)).times(Mat4.translation(11,0,0)).times(Mat4.rotation(0.8*Math.sin(t),1,0,0));
-        this.shapes.sphere.draw(context, program_state, planet3, this.materials.planet3);
-        //Rings
-        model_transform = planet3.times(Mat4.scale(2,2,0.05));
-        this.shapes.torus.draw(context, program_state, model_transform, this.materials.ring);
-
-        let planet4 = sunPosition.times(Mat4.rotation(0.25*t,0,1,0)).times(Mat4.translation(14,0,0));
-        this.shapes.sphere.draw(context, program_state, planet4, this.materials.planet4);
-        let moon = planet4.times(Mat4.rotation(0.5*t,0,1,0)).times(Mat4.translation(2.5,0,0));
-        this.shapes.moon.draw(context, program_state, moon, this.materials.moon);
-
-        //Camera positions
-        this.start = Mat4.identity().times(Mat4.translation(0,0,26));
-        this.planet_1 = planet1.times(Mat4.translation(0,0,5));
-        this.planet_2 = planet2.times(Mat4.translation(0,0,5));
-        this.planet_3 = planet3.times(Mat4.translation(0,0,5));
-        this.planet_4 = planet4.times(Mat4.translation(0,0,5));
-        this.moon = moon.times(Mat4.translation(0,0,5));
-
-        if (this.attached){
-            let desired = Mat4.inverse(this.attached());
-            desired = desired.map((x,i) => Vector.from(program_state.camera_inverse[i]).mix(x, 0.1))
-            program_state.set_camera(desired);
-        }
-
+        this.draw_cube(context, program_state, model_transform, 0);
+        //this.paint_cube(context,program_state,model_transform,0);
     }
 }
 
