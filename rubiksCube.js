@@ -91,12 +91,27 @@ export class Assignment3 extends Scene {
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-        this.key_triggered_button("Test 1 button", ["1"], () => this.attached = () => this.start);
+        this.rotate = false;
+        this.key_triggered_button("Test 1 button", ["1"], () => this.rotate ^= 1);
         this.new_line();
 }
 
     draw_cube(context, program_state, model_transform, index){
         let base = model_transform;
+        let t = program_state.animation_time / 1000;
+        if (this.rotate){
+            let model_transform = Mat4.rotation(0.1,0,1,0);
+            this.box000[0] = this.box000[0].times(Mat4.translation(2,0,2)).times(model_transform).times(Mat4.translation(-2,0,-2));
+            this.box001[0] =this.box001[0].times(Mat4.translation(0,0,2)).times(model_transform).times(Mat4.translation(0,0,-2));
+            this.box002[0] =this.box002[0].times(Mat4.translation(-2,0,2)).times(model_transform).times(Mat4.translation(2,0,-2));
+            this.box010[0] =this.box010[0].times(Mat4.translation(2,0,0)).times(model_transform).times(Mat4.translation(-2,0,0));
+            this.box011[0] =this.box011[0].times(model_transform);
+            this.box012[0] =this.box012[0].times(Mat4.translation(-2,0,0)).times(model_transform).times(Mat4.translation(2,0,0));
+            this.box020[0] =this.box020[0].times(Mat4.translation(2,0,-2)).times(model_transform).times(Mat4.translation(-2,0,2));
+            this.box021[0] =this.box021[0].times(Mat4.translation(0,0,-2)).times(model_transform).times(Mat4.translation(0,0,2));
+            this.box022[0] =this.box022[0].times(Mat4.translation(-2,0,-2)).times(model_transform).times(Mat4.translation(2,0,2));
+            
+        }
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++){
                 for (let k = 0; k < 3; k++){
