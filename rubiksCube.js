@@ -42,28 +42,86 @@ export class Assignment3 extends Scene {
         }
 
         this.initial_camera_location = Mat4.look_at(vec3(0, 10, 20), vec3(0, 0, 0), vec3(0, 1, 0));
+
+        this.cubes = [];
+        this.box000 = [Mat4.identity(), color(0.1,0.1,0.1,1)];
+        this.box001 = [Mat4.identity().times(Mat4.translation(2,0,0)), color(0,0,1,1)];
+        this.box002 = [Mat4.identity().times(Mat4.translation(4,0,0)), color(0,0,2,1)];
+        this.box010 = [Mat4.identity().times(Mat4.translation(0,0,2)), color(0,1,0,1)];
+        this.box011 = [Mat4.identity().times(Mat4.translation(2,0,2)), color(0,1,1,1)];
+        this.box012 = [Mat4.identity().times(Mat4.translation(4,0,2)), color(0,1,2,1)];
+        this.box020 = [Mat4.identity().times(Mat4.translation(0,0,4)), color(0,2,0,1)];
+        this.box021 = [Mat4.identity().times(Mat4.translation(2,0,4)), color(0,2,1,1)];
+        this.box022 = [Mat4.identity().times(Mat4.translation(4,0,4)), color(0,2,2,1)];
+        this.box100 = [Mat4.identity().times(Mat4.translation(0,2,0)), color(1,0,0,1)];
+        this.box101 = [Mat4.identity().times(Mat4.translation(2,2,0)), color(1,0,1,1)];
+        this.box102 = [Mat4.identity().times(Mat4.translation(4,2,0)), color(1,0,2,1)];
+        this.box110 = [Mat4.identity().times(Mat4.translation(0,2,2)), color(1,1,0,1)];
+        this.box111 = [Mat4.identity().times(Mat4.translation(2,2,2)), color(1,1,1,1)];
+        this.box112 = [Mat4.identity().times(Mat4.translation(4,2,2)), color(1,1,2,1)];
+        this.box120 = [Mat4.identity().times(Mat4.translation(0,2,4)), color(1,2,0,1)];
+        this.box121 = [Mat4.identity().times(Mat4.translation(2,2,4)), color(1,2,1,1)];
+        this.box122 = [Mat4.identity().times(Mat4.translation(4,2,4)), color(1,2,2,1)];
+        this.box200 = [Mat4.identity().times(Mat4.translation(0,4,0)), color(2,0,0,1)];
+        this.box201 = [Mat4.identity().times(Mat4.translation(2,4,0)), color(2,0,1,1)];
+        this.box202 = [Mat4.identity().times(Mat4.translation(4,4,0)), color(2,0,2,1)];
+        this.box210 = [Mat4.identity().times(Mat4.translation(0,4,2)), color(2,1,0,1)];
+        this.box211 = [Mat4.identity().times(Mat4.translation(2,4,2)), color(2,1,1,1)];
+        this.box212 = [Mat4.identity().times(Mat4.translation(4,4,2)), color(2,1,2,1)];
+        this.box220 = [Mat4.identity().times(Mat4.translation(0,4,4)), color(2,2,0,1)];
+        this.box221 = [Mat4.identity().times(Mat4.translation(2,4,4)), color(2,2,1,1)];
+        this.box222 = [Mat4.identity().times(Mat4.translation(4,4,4)), color(2,2,2,1)];
+
+
     }
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-        this.key_triggered_button("View solar system", ["Control", "0"], () => this.attached = () => this.start);
+        this.key_triggered_button("Test 1 button", ["1"], () => this.attached = () => this.start);
         this.new_line();
 }
 
     draw_cube(context, program_state, model_transform, index){
         let base = model_transform;
-        for (let i = 0; i < 3; i++){
-            let column = base.times(Mat4.translation(0,i*2,0));
-            for (let j = 0; j < 3; j++){
-                let row = column.times(Mat4.translation(j*2,0,0));
-                for (let k = 0; k < 3; k++){
-                    let box_color = color(i,j,k,1.0);
-                    this.shapes.cube.draw(context,program_state,row,this.materials.test.override(box_color));
-                    row = row.times(Mat4.translation(0,0,2));
-                }
+        this.shapes.cube.draw(context, program_state, this.box000[0], this.materials.test.override(this.box000[1]));
+        this.shapes.cube.draw(context, program_state, this.box001[0], this.materials.test.override(this.box001[1]));
+        this.shapes.cube.draw(context, program_state, this.box002[0], this.materials.test.override(this.box002[1]));
+        this.shapes.cube.draw(context, program_state, this.box010[0], this.materials.test.override(this.box010[1]));
+        this.shapes.cube.draw(context, program_state, this.box011[0], this.materials.test.override(this.box011[1]));
+        this.shapes.cube.draw(context, program_state, this.box012[0], this.materials.test.override(this.box012[1]));
+        this.shapes.cube.draw(context, program_state, this.box020[0], this.materials.test.override(this.box020[1]));
+        this.shapes.cube.draw(context, program_state, this.box021[0], this.materials.test.override(this.box021[1]));
+        this.shapes.cube.draw(context, program_state, this.box022[0], this.materials.test.override(this.box022[1]));
+        this.shapes.cube.draw(context, program_state, this.box100[0], this.materials.test.override(this.box100[1]));
+        this.shapes.cube.draw(context, program_state, this.box101[0], this.materials.test.override(this.box101[1]));
+        this.shapes.cube.draw(context, program_state, this.box102[0], this.materials.test.override(this.box102[1]));
+        this.shapes.cube.draw(context, program_state, this.box110[0], this.materials.test.override(this.box110[1]));
+        this.shapes.cube.draw(context, program_state, this.box111[0], this.materials.test.override(this.box111[1]));
+        this.shapes.cube.draw(context, program_state, this.box112[0], this.materials.test.override(this.box112[1]));
+        this.shapes.cube.draw(context, program_state, this.box120[0], this.materials.test.override(this.box120[1]));
+        this.shapes.cube.draw(context, program_state, this.box121[0], this.materials.test.override(this.box121[1]));
+        this.shapes.cube.draw(context, program_state, this.box122[0], this.materials.test.override(this.box122[1]));
+        this.shapes.cube.draw(context, program_state, this.box200[0], this.materials.test.override(this.box200[1]));
+        this.shapes.cube.draw(context, program_state, this.box201[0], this.materials.test.override(this.box201[1]));
+        this.shapes.cube.draw(context, program_state, this.box202[0], this.materials.test.override(this.box202[1]));
+        this.shapes.cube.draw(context, program_state, this.box210[0], this.materials.test.override(this.box210[1]));
+        this.shapes.cube.draw(context, program_state, this.box211[0], this.materials.test.override(this.box211[1]));
+        this.shapes.cube.draw(context, program_state, this.box212[0], this.materials.test.override(this.box212[1]));
+        this.shapes.cube.draw(context, program_state, this.box220[0], this.materials.test.override(this.box220[1]));
+        this.shapes.cube.draw(context, program_state, this.box221[0], this.materials.test.override(this.box221[1]));
+        this.shapes.cube.draw(context, program_state, this.box222[0], this.materials.test.override(this.box222[1]));
+//         for (let i = 0; i < 3; i++){
+//             let column = base.times(Mat4.translation(0,i*2,0));
+//             for (let j = 0; j < 3; j++){
+//                 let row = column.times(Mat4.translation(j*2,0,0));
+//                 for (let k = 0; k < 3; k++){
+//                     let box_color = color(i,j,k,1.0);
+//                     this.shapes.cube.draw(context,program_state,row,this.materials.test.override(box_color));
+//                     row = row.times(Mat4.translation(0,0,2));
+//                 }
                 
-            }
-        }
+//             }
+//         }
         //this.shapes.cube.draw(context, program_state, model_transform, this.materials.test);
 
     }
