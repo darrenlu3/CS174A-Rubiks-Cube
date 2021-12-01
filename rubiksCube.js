@@ -93,10 +93,17 @@ export class Assignment3 extends Scene {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
         this.rotate_bot = false;
         this.rotate_top = false;
+        this.rotate_left = false;
+        this.rotate_front = false;
         this.bound1 = 0;
         this.bound2 = 0;
-        this.key_triggered_button("Bottom", ["1"], () => this.rotate_bot ^= 1);
-        this.key_triggered_button("Top", ["2"], () => this.rotate_top ^= 1);
+        this.bound3 = 0;
+        this.bound5 = 0;
+        this.key_triggered_button("Bottom", ["b"], () => this.rotate_bot = 1);
+        this.key_triggered_button("Top", ["t"], () => this.rotate_top = 1);
+        this.key_triggered_button("Left", ["l"], () => this.rotate_left = 1);
+        this.key_triggered_button("Front", ["g"], () => this.rotate_front = 1);
+
         this.new_line();
 }
 
@@ -135,6 +142,40 @@ export class Assignment3 extends Scene {
             if (this.bound2 == 30) {
                 this.rotate_top ^= 1;
                 this.bound2 = 0;
+            }
+        }
+        if (this.rotate_left) {
+            this.bound3 += 1;
+            let model_transform = Mat4.rotation(Math.PI/60,1,0,0);
+            this.box000[0] = this.box000[0].times(Mat4.translation(0,2,2)).times(model_transform).times(Mat4.translation(0,-2,-2));
+            this.box010[0] =this.box010[0].times(Mat4.translation(0,2,0)).times(model_transform).times(Mat4.translation(0,-2,0));
+            this.box020[0] =this.box020[0].times(Mat4.translation(0,2,-2)).times(model_transform).times(Mat4.translation(0,-2,2));
+            this.box100[0] =this.box100[0].times(Mat4.translation(0,0,2)).times(model_transform).times(Mat4.translation(0,0,-2));
+            this.box110[0] =this.box110[0].times(model_transform);
+            this.box120[0] =this.box120[0].times(Mat4.translation(0,0,-2)).times(model_transform).times(Mat4.translation(0,0,2));
+            this.box200[0] =this.box200[0].times(Mat4.translation(0,-2,2)).times(model_transform).times(Mat4.translation(0,2,-2));
+            this.box210[0] =this.box210[0].times(Mat4.translation(0,-2,0)).times(model_transform).times(Mat4.translation(0,2,0));
+            this.box220[0] =this.box220[0].times(Mat4.translation(0,-2,-2)).times(model_transform).times(Mat4.translation(0,2,2));
+            if (this.bound3 == 30) {
+                this.rotate_left ^= 1;
+                this.bound3 = 0;
+            }
+        }
+        if (this.rotate_front) {
+            this.bound5 += 1;
+            let model_transform = Mat4.rotation(Math.PI/60,0,0,1);
+            this.box020[0] = this.box020[0].times(Mat4.translation(2,2,0)).times(model_transform).times(Mat4.translation(-2,-2,0));
+            this.box021[0] =this.box021[0].times(Mat4.translation(0,2,0)).times(model_transform).times(Mat4.translation(0,-2,0));
+            this.box022[0] =this.box022[0].times(Mat4.translation(-2,2,0)).times(model_transform).times(Mat4.translation(2,-2,0));
+            this.box120[0] =this.box120[0].times(Mat4.translation(2,0,0)).times(model_transform).times(Mat4.translation(-2,0,0));
+            this.box121[0] =this.box121[0].times(model_transform);
+            this.box122[0] =this.box122[0].times(Mat4.translation(-2,0,0)).times(model_transform).times(Mat4.translation(2,0,0));
+            this.box220[0] =this.box220[0].times(Mat4.translation(2,-2,0)).times(model_transform).times(Mat4.translation(-2,2,0));
+            this.box221[0] =this.box221[0].times(Mat4.translation(0,-2,0)).times(model_transform).times(Mat4.translation(0,2,0));
+            this.box222[0] =this.box222[0].times(Mat4.translation(-2,-2,0)).times(model_transform).times(Mat4.translation(2,2,0));
+            if (this.bound5 == 30) {
+                this.rotate_front^= 1;
+                this.bound5 = 0;
             }
         }
         for (let i = 0; i < 3; i++) {
