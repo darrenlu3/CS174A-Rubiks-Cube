@@ -91,16 +91,21 @@ export class Assignment3 extends Scene {
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-        this.rotate = false;
-        this.key_triggered_button("Test 1 button", ["1"], () => this.rotate ^= 1);
+        this.rotate_bot = false;
+        this.rotate_top = false;
+        this.bound1 = 0;
+        this.bound2 = 0;
+        this.key_triggered_button("Bottom", ["1"], () => this.rotate_bot ^= 1);
+        this.key_triggered_button("Top", ["2"], () => this.rotate_top ^= 1);
         this.new_line();
 }
 
     draw_cube(context, program_state, model_transform, index){
         let base = model_transform;
         let t = program_state.animation_time / 1000;
-        if (this.rotate){
-            let model_transform = Mat4.rotation(0.1,0,1,0);
+        if (this.rotate_bot){
+            this.bound1 += 1;
+            let model_transform = Mat4.rotation(Math.PI/60,0,1,0);
             this.box000[0] = this.box000[0].times(Mat4.translation(2,0,2)).times(model_transform).times(Mat4.translation(-2,0,-2));
             this.box001[0] =this.box001[0].times(Mat4.translation(0,0,2)).times(model_transform).times(Mat4.translation(0,0,-2));
             this.box002[0] =this.box002[0].times(Mat4.translation(-2,0,2)).times(model_transform).times(Mat4.translation(2,0,-2));
@@ -110,7 +115,27 @@ export class Assignment3 extends Scene {
             this.box020[0] =this.box020[0].times(Mat4.translation(2,0,-2)).times(model_transform).times(Mat4.translation(-2,0,2));
             this.box021[0] =this.box021[0].times(Mat4.translation(0,0,-2)).times(model_transform).times(Mat4.translation(0,0,2));
             this.box022[0] =this.box022[0].times(Mat4.translation(-2,0,-2)).times(model_transform).times(Mat4.translation(2,0,2));
-            
+            if (this.bound1 == 30) {
+                this.rotate_bot = false;
+                this.bound1 = 0;
+            }
+        }
+        if (this.rotate_top) {
+            this.bound2 += 1;
+            let model_transform = Mat4.rotation(Math.PI/60,0,1,0);
+            this.box200[0] = this.box200[0].times(Mat4.translation(2,0,2)).times(model_transform).times(Mat4.translation(-2,0,-2));
+            this.box201[0] =this.box201[0].times(Mat4.translation(0,0,2)).times(model_transform).times(Mat4.translation(0,0,-2));
+            this.box202[0] =this.box202[0].times(Mat4.translation(-2,0,2)).times(model_transform).times(Mat4.translation(2,0,-2));
+            this.box210[0] =this.box210[0].times(Mat4.translation(2,0,0)).times(model_transform).times(Mat4.translation(-2,0,0));
+            this.box211[0] =this.box211[0].times(model_transform);
+            this.box212[0] =this.box212[0].times(Mat4.translation(-2,0,0)).times(model_transform).times(Mat4.translation(2,0,0));
+            this.box220[0] =this.box220[0].times(Mat4.translation(2,0,-2)).times(model_transform).times(Mat4.translation(-2,0,2));
+            this.box221[0] =this.box221[0].times(Mat4.translation(0,0,-2)).times(model_transform).times(Mat4.translation(0,0,2));
+            this.box222[0] =this.box222[0].times(Mat4.translation(-2,0,-2)).times(model_transform).times(Mat4.translation(2,0,2));
+            if (this.bound2 == 30) {
+                this.rotate_top ^= 1;
+                this.bound2 = 0;
+            }
         }
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++){
