@@ -1,4 +1,4 @@
-import {defs, tiny} from './examples/common.js';
+import { defs, tiny } from './examples/common.js';
 
 const {
     Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene,
@@ -6,7 +6,7 @@ const {
 
 class Cube extends Shape {
     constructor() {
-        super("position", "normal",);
+        super("position", "normal");
         // Loop 3 times (for each axis), and inside loop twice (for opposing cube sides):
         this.arrays.position = Vector3.cast(
             [-1, -1, -1], [1, -1, -1], [-1, -1, 1], [1, -1, 1], [1, 1, -1], [-1, 1, -1], [1, 1, 1], [-1, 1, 1],
@@ -22,7 +22,7 @@ class Cube extends Shape {
     }
 }
 
-export class Assignment3 extends Scene {
+export class PuzzleCube extends Scene {
     constructor() {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
         super();
@@ -36,53 +36,53 @@ export class Assignment3 extends Scene {
         // *** Materials
         this.materials = {
             test: new Material(new defs.Phong_Shader(),
-                {ambient: .4, diffusivity: .6, color: hex_color("#ffffff")}),
+                { ambient: .4, diffusivity: .6, color: hex_color("#ffffff") }),
             test2: new Material(new defs.Phong_Shader(),
-                {ambient: .4, diffusivity: .6, color: hex_color("#ff0000")}),
+                { ambient: .4, diffusivity: .6, color: hex_color("#ff0000") }),
         }
 
         this.initial_camera_location = Mat4.look_at(vec3(15, 10, 15), vec3(0, 0, 0), vec3(0, 1, 0));
 
-        this.box000 = [Mat4.identity(), color(0.1,0.1,0.1,1)];
-        this.box001 = [Mat4.identity().times(Mat4.translation(2,0,0)), color(0,0,1,1)];
-        this.box002 = [Mat4.identity().times(Mat4.translation(4,0,0)), color(0,0,2,1)];
-        this.box010 = [Mat4.identity().times(Mat4.translation(0,0,2)), color(0,1,0,1)];
-        this.box011 = [Mat4.identity().times(Mat4.translation(2,0,2)), color(0,1,1,1)];
-        this.box012 = [Mat4.identity().times(Mat4.translation(4,0,2)), color(0,1,2,1)];
-        this.box020 = [Mat4.identity().times(Mat4.translation(0,0,4)), color(0,2,0,1)];
-        this.box021 = [Mat4.identity().times(Mat4.translation(2,0,4)), color(0,2,1,1)];
-        this.box022 = [Mat4.identity().times(Mat4.translation(4,0,4)), color(0,2,2,1)];
-        this.box100 = [Mat4.identity().times(Mat4.translation(0,2,0)), color(1,0,0,1)];
-        this.box101 = [Mat4.identity().times(Mat4.translation(2,2,0)), color(1,0,1,1)];
-        this.box102 = [Mat4.identity().times(Mat4.translation(4,2,0)), color(1,0,2,1)];
-        this.box110 = [Mat4.identity().times(Mat4.translation(0,2,2)), color(1,1,0,1)];
-        this.box111 = [Mat4.identity().times(Mat4.translation(2,2,2)), color(1,1,1,1)];
-        this.box112 = [Mat4.identity().times(Mat4.translation(4,2,2)), color(1,1,2,1)];
-        this.box120 = [Mat4.identity().times(Mat4.translation(0,2,4)), color(1,2,0,1)];
-        this.box121 = [Mat4.identity().times(Mat4.translation(2,2,4)), color(1,2,1,1)];
-        this.box122 = [Mat4.identity().times(Mat4.translation(4,2,4)), color(1,2,2,1)];
-        this.box200 = [Mat4.identity().times(Mat4.translation(0,4,0)), color(2,0,0,1)];
-        this.box201 = [Mat4.identity().times(Mat4.translation(2,4,0)), color(2,0,1,1)];
-        this.box202 = [Mat4.identity().times(Mat4.translation(4,4,0)), color(2,0,2,1)];
-        this.box210 = [Mat4.identity().times(Mat4.translation(0,4,2)), color(2,1,0,1)];
-        this.box211 = [Mat4.identity().times(Mat4.translation(2,4,2)), color(2,1,1,1)];
-        this.box212 = [Mat4.identity().times(Mat4.translation(4,4,2)), color(2,1,2,1)];
-        this.box220 = [Mat4.identity().times(Mat4.translation(0,4,4)), color(2,2,0,1)];
-        this.box221 = [Mat4.identity().times(Mat4.translation(2,4,4)), color(2,2,1,1)];
-        this.box222 = [Mat4.identity().times(Mat4.translation(4,4,4)), color(2,2,2,1)];
+        this.box000 = [Mat4.identity(), color(0.1, 0.1, 0.1, 1)];
+        this.box001 = [Mat4.identity().times(Mat4.translation(2, 0, 0)), color(0, 0, 1, 1)];
+        this.box002 = [Mat4.identity().times(Mat4.translation(4, 0, 0)), color(0, 0, 2, 1)];
+        this.box010 = [Mat4.identity().times(Mat4.translation(0, 0, 2)), color(0, 1, 0, 1)];
+        this.box011 = [Mat4.identity().times(Mat4.translation(2, 0, 2)), color(0, 1, 1, 1)];
+        this.box012 = [Mat4.identity().times(Mat4.translation(4, 0, 2)), color(0, 1, 2, 1)];
+        this.box020 = [Mat4.identity().times(Mat4.translation(0, 0, 4)), color(0, 2, 0, 1)];
+        this.box021 = [Mat4.identity().times(Mat4.translation(2, 0, 4)), color(0, 2, 1, 1)];
+        this.box022 = [Mat4.identity().times(Mat4.translation(4, 0, 4)), color(0, 2, 2, 1)];
+        this.box100 = [Mat4.identity().times(Mat4.translation(0, 2, 0)), color(1, 0, 0, 1)];
+        this.box101 = [Mat4.identity().times(Mat4.translation(2, 2, 0)), color(1, 0, 1, 1)];
+        this.box102 = [Mat4.identity().times(Mat4.translation(4, 2, 0)), color(1, 0, 2, 1)];
+        this.box110 = [Mat4.identity().times(Mat4.translation(0, 2, 2)), color(1, 1, 0, 1)];
+        this.box111 = [Mat4.identity().times(Mat4.translation(2, 2, 2)), color(1, 1, 1, 1)];
+        this.box112 = [Mat4.identity().times(Mat4.translation(4, 2, 2)), color(1, 1, 2, 1)];
+        this.box120 = [Mat4.identity().times(Mat4.translation(0, 2, 4)), color(1, 2, 0, 1)];
+        this.box121 = [Mat4.identity().times(Mat4.translation(2, 2, 4)), color(1, 2, 1, 1)];
+        this.box122 = [Mat4.identity().times(Mat4.translation(4, 2, 4)), color(1, 2, 2, 1)];
+        this.box200 = [Mat4.identity().times(Mat4.translation(0, 4, 0)), color(2, 0, 0, 1)];
+        this.box201 = [Mat4.identity().times(Mat4.translation(2, 4, 0)), color(2, 0, 1, 1)];
+        this.box202 = [Mat4.identity().times(Mat4.translation(4, 4, 0)), color(2, 0, 2, 1)];
+        this.box210 = [Mat4.identity().times(Mat4.translation(0, 4, 2)), color(2, 1, 0, 1)];
+        this.box211 = [Mat4.identity().times(Mat4.translation(2, 4, 2)), color(2, 1, 1, 1)];
+        this.box212 = [Mat4.identity().times(Mat4.translation(4, 4, 2)), color(2, 1, 2, 1)];
+        this.box220 = [Mat4.identity().times(Mat4.translation(0, 4, 4)), color(2, 2, 0, 1)];
+        this.box221 = [Mat4.identity().times(Mat4.translation(2, 4, 4)), color(2, 2, 1, 1)];
+        this.box222 = [Mat4.identity().times(Mat4.translation(4, 4, 4)), color(2, 2, 2, 1)];
 
         this.cubes = [
-            [ [this.box000, this.box001, this.box002],
-              [this.box010, this.box011, this.box012],
-              [this.box020, this.box021, this.box022],
+            [[this.box000, this.box001, this.box002],
+            [this.box010, this.box011, this.box012],
+            [this.box020, this.box021, this.box022],
             ],
-            [ [this.box100, this.box101, this.box102],
-              [this.box110, this.box111, this.box112],
-              [this.box120, this.box121, this.box122],
+            [[this.box100, this.box101, this.box102],
+            [this.box110, this.box111, this.box112],
+            [this.box120, this.box121, this.box122],
             ],
-            [ [this.box200, this.box201, this.box202],
-              [this.box210, this.box211, this.box212],
-              [this.box220, this.box221, this.box222],
+            [[this.box200, this.box201, this.box202],
+            [this.box210, this.box211, this.box212],
+            [this.box220, this.box221, this.box222],
             ],
         ];
 
@@ -106,47 +106,52 @@ export class Assignment3 extends Scene {
         this.bound5 = 0;
         this.bound6 = 0;
         this.key_triggered_button("Bottom", ["5"], () => this.rotate_bot = 1);
+        this.new_line();
         this.key_triggered_button("Top", ["6"], () => this.rotate_top = 1);
+        this.new_line();
         this.key_triggered_button("Left", ["7"], () => this.rotate_left = 1);
+        this.new_line();
         this.key_triggered_button("Right", ["8"], () => this.rotate_right = 1);
+        this.new_line();
         this.key_triggered_button("Front", ["9"], () => this.rotate_front = 1);
+        this.new_line();
         this.key_triggered_button("Back", ["0"], () => this.rotate_back = 1);
+        this.new_line();
         this.key_triggered_button("Shuffle", ["-"], () => this.shuffle_flag = 1);
-
         this.new_line();
     }
 
     reset_model_transform() {
         this.box000[0] = Mat4.identity();
-        this.box001[0] = Mat4.identity().times(Mat4.translation(2,0,0));
-        this.box002[0] = Mat4.identity().times(Mat4.translation(4,0,0));
-        this.box010[0] = Mat4.identity().times(Mat4.translation(0,0,2));
-        this.box011[0] = Mat4.identity().times(Mat4.translation(2,0,2));
-        this.box012[0] = Mat4.identity().times(Mat4.translation(4,0,2));
-        this.box020[0] = Mat4.identity().times(Mat4.translation(0,0,4));
-        this.box021[0] = Mat4.identity().times(Mat4.translation(2,0,4));
-        this.box022[0] = Mat4.identity().times(Mat4.translation(4,0,4));
-        this.box100[0] = Mat4.identity().times(Mat4.translation(0,2,0));
-        this.box101[0] = Mat4.identity().times(Mat4.translation(2,2,0));
-        this.box102[0] = Mat4.identity().times(Mat4.translation(4,2,0));
-        this.box110[0] = Mat4.identity().times(Mat4.translation(0,2,2));
-        this.box111[0] = Mat4.identity().times(Mat4.translation(2,2,2));
-        this.box112[0] = Mat4.identity().times(Mat4.translation(4,2,2));
-        this.box120[0] = Mat4.identity().times(Mat4.translation(0,2,4));
-        this.box121[0] = Mat4.identity().times(Mat4.translation(2,2,4));
-        this.box122[0] = Mat4.identity().times(Mat4.translation(4,2,4));
-        this.box200[0] = Mat4.identity().times(Mat4.translation(0,4,0));
-        this.box201[0] = Mat4.identity().times(Mat4.translation(2,4,0));
-        this.box202[0] = Mat4.identity().times(Mat4.translation(4,4,0));
-        this.box210[0] = Mat4.identity().times(Mat4.translation(0,4,2));
-        this.box211[0] = Mat4.identity().times(Mat4.translation(2,4,2));
-        this.box212[0] = Mat4.identity().times(Mat4.translation(4,4,2));
-        this.box220[0] = Mat4.identity().times(Mat4.translation(0,4,4));
-        this.box221[0] = Mat4.identity().times(Mat4.translation(2,4,4));
-        this.box222[0] = Mat4.identity().times(Mat4.translation(4,4,4));
+        this.box001[0] = Mat4.identity().times(Mat4.translation(2, 0, 0));
+        this.box002[0] = Mat4.identity().times(Mat4.translation(4, 0, 0));
+        this.box010[0] = Mat4.identity().times(Mat4.translation(0, 0, 2));
+        this.box011[0] = Mat4.identity().times(Mat4.translation(2, 0, 2));
+        this.box012[0] = Mat4.identity().times(Mat4.translation(4, 0, 2));
+        this.box020[0] = Mat4.identity().times(Mat4.translation(0, 0, 4));
+        this.box021[0] = Mat4.identity().times(Mat4.translation(2, 0, 4));
+        this.box022[0] = Mat4.identity().times(Mat4.translation(4, 0, 4));
+        this.box100[0] = Mat4.identity().times(Mat4.translation(0, 2, 0));
+        this.box101[0] = Mat4.identity().times(Mat4.translation(2, 2, 0));
+        this.box102[0] = Mat4.identity().times(Mat4.translation(4, 2, 0));
+        this.box110[0] = Mat4.identity().times(Mat4.translation(0, 2, 2));
+        this.box111[0] = Mat4.identity().times(Mat4.translation(2, 2, 2));
+        this.box112[0] = Mat4.identity().times(Mat4.translation(4, 2, 2));
+        this.box120[0] = Mat4.identity().times(Mat4.translation(0, 2, 4));
+        this.box121[0] = Mat4.identity().times(Mat4.translation(2, 2, 4));
+        this.box122[0] = Mat4.identity().times(Mat4.translation(4, 2, 4));
+        this.box200[0] = Mat4.identity().times(Mat4.translation(0, 4, 0));
+        this.box201[0] = Mat4.identity().times(Mat4.translation(2, 4, 0));
+        this.box202[0] = Mat4.identity().times(Mat4.translation(4, 4, 0));
+        this.box210[0] = Mat4.identity().times(Mat4.translation(0, 4, 2));
+        this.box211[0] = Mat4.identity().times(Mat4.translation(2, 4, 2));
+        this.box212[0] = Mat4.identity().times(Mat4.translation(4, 4, 2));
+        this.box220[0] = Mat4.identity().times(Mat4.translation(0, 4, 4));
+        this.box221[0] = Mat4.identity().times(Mat4.translation(2, 4, 4));
+        this.box222[0] = Mat4.identity().times(Mat4.translation(4, 4, 4));
     }
 
-    draw_cube(context, program_state, model_transform, index){
+    draw_cube(context, program_state, model_transform, index) {
         let base = model_transform;
         let t = program_state.animation_time / 1000;
         if (this.rotate_bot && this.bound2 == 0 && this.bound3 == 0 && this.bound4 == 0 && this.bound5 == 0 && this.bound6 == 0) {
@@ -179,16 +184,16 @@ export class Assignment3 extends Scene {
         }
         if (this.rotate_top && this.bound1 == 0 && this.bound3 == 0 && this.bound4 == 0 && this.bound5 == 0 && this.bound6 == 0) {
             this.bound2 += 1;
-            let model_transform = Mat4.rotation(Math.PI/60,0,1,0);
-            this.box200[0] =this.box200[0].times(Mat4.translation(2,0,2)).times(model_transform).times(Mat4.translation(-2,0,-2));
-            this.box201[0] =this.box201[0].times(Mat4.translation(0,0,2)).times(model_transform).times(Mat4.translation(0,0,-2));
-            this.box202[0] =this.box202[0].times(Mat4.translation(-2,0,2)).times(model_transform).times(Mat4.translation(2,0,-2));
-            this.box210[0] =this.box210[0].times(Mat4.translation(2,0,0)).times(model_transform).times(Mat4.translation(-2,0,0));
-            this.box211[0] =this.box211[0].times(model_transform);
-            this.box212[0] =this.box212[0].times(Mat4.translation(-2,0,0)).times(model_transform).times(Mat4.translation(2,0,0));
-            this.box220[0] =this.box220[0].times(Mat4.translation(2,0,-2)).times(model_transform).times(Mat4.translation(-2,0,2));
-            this.box221[0] =this.box221[0].times(Mat4.translation(0,0,-2)).times(model_transform).times(Mat4.translation(0,0,2));
-            this.box222[0] =this.box222[0].times(Mat4.translation(-2,0,-2)).times(model_transform).times(Mat4.translation(2,0,2));
+            let model_transform = Mat4.rotation(Math.PI / 60, 0, 1, 0);
+            this.box200[0] = this.box200[0].times(Mat4.translation(2, 0, 2)).times(model_transform).times(Mat4.translation(-2, 0, -2));
+            this.box201[0] = this.box201[0].times(Mat4.translation(0, 0, 2)).times(model_transform).times(Mat4.translation(0, 0, -2));
+            this.box202[0] = this.box202[0].times(Mat4.translation(-2, 0, 2)).times(model_transform).times(Mat4.translation(2, 0, -2));
+            this.box210[0] = this.box210[0].times(Mat4.translation(2, 0, 0)).times(model_transform).times(Mat4.translation(-2, 0, 0));
+            this.box211[0] = this.box211[0].times(model_transform);
+            this.box212[0] = this.box212[0].times(Mat4.translation(-2, 0, 0)).times(model_transform).times(Mat4.translation(2, 0, 0));
+            this.box220[0] = this.box220[0].times(Mat4.translation(2, 0, -2)).times(model_transform).times(Mat4.translation(-2, 0, 2));
+            this.box221[0] = this.box221[0].times(Mat4.translation(0, 0, -2)).times(model_transform).times(Mat4.translation(0, 0, 2));
+            this.box222[0] = this.box222[0].times(Mat4.translation(-2, 0, -2)).times(model_transform).times(Mat4.translation(2, 0, 2));
             if (this.bound2 == 30) {
                 this.rotate_top = false;
                 this.bound2 = 0;
@@ -207,16 +212,16 @@ export class Assignment3 extends Scene {
         }
         if (this.rotate_left && this.bound2 == 0 && this.bound1 == 0 && this.bound4 == 0 && this.bound5 == 0 && this.bound6 == 0) {
             this.bound3 += 1;
-            let model_transform = Mat4.rotation(Math.PI/60,1,0,0);
-            this.box000[0] =this.box000[0].times(Mat4.translation(0,2,2)).times(model_transform).times(Mat4.translation(0,-2,-2));
-            this.box010[0] =this.box010[0].times(Mat4.translation(0,2,0)).times(model_transform).times(Mat4.translation(0,-2,0));
-            this.box020[0] =this.box020[0].times(Mat4.translation(0,2,-2)).times(model_transform).times(Mat4.translation(0,-2,2));
-            this.box100[0] =this.box100[0].times(Mat4.translation(0,0,2)).times(model_transform).times(Mat4.translation(0,0,-2));
-            this.box110[0] =this.box110[0].times(model_transform);
-            this.box120[0] =this.box120[0].times(Mat4.translation(0,0,-2)).times(model_transform).times(Mat4.translation(0,0,2));
-            this.box200[0] =this.box200[0].times(Mat4.translation(0,-2,2)).times(model_transform).times(Mat4.translation(0,2,-2));
-            this.box210[0] =this.box210[0].times(Mat4.translation(0,-2,0)).times(model_transform).times(Mat4.translation(0,2,0));
-            this.box220[0] =this.box220[0].times(Mat4.translation(0,-2,-2)).times(model_transform).times(Mat4.translation(0,2,2));
+            let model_transform = Mat4.rotation(Math.PI / 60, 1, 0, 0);
+            this.box000[0] = this.box000[0].times(Mat4.translation(0, 2, 2)).times(model_transform).times(Mat4.translation(0, -2, -2));
+            this.box010[0] = this.box010[0].times(Mat4.translation(0, 2, 0)).times(model_transform).times(Mat4.translation(0, -2, 0));
+            this.box020[0] = this.box020[0].times(Mat4.translation(0, 2, -2)).times(model_transform).times(Mat4.translation(0, -2, 2));
+            this.box100[0] = this.box100[0].times(Mat4.translation(0, 0, 2)).times(model_transform).times(Mat4.translation(0, 0, -2));
+            this.box110[0] = this.box110[0].times(model_transform);
+            this.box120[0] = this.box120[0].times(Mat4.translation(0, 0, -2)).times(model_transform).times(Mat4.translation(0, 0, 2));
+            this.box200[0] = this.box200[0].times(Mat4.translation(0, -2, 2)).times(model_transform).times(Mat4.translation(0, 2, -2));
+            this.box210[0] = this.box210[0].times(Mat4.translation(0, -2, 0)).times(model_transform).times(Mat4.translation(0, 2, 0));
+            this.box220[0] = this.box220[0].times(Mat4.translation(0, -2, -2)).times(model_transform).times(Mat4.translation(0, 2, 2));
             if (this.bound3 == 30) {
                 this.rotate_left = false;
                 this.bound3 = 0;
@@ -235,16 +240,16 @@ export class Assignment3 extends Scene {
         }
         if (this.rotate_right && this.bound2 == 0 && this.bound3 == 0 && this.bound1 == 0 && this.bound5 == 0 && this.bound6 == 0) {
             this.bound4 += 1;
-            let model_transform = Mat4.rotation(Math.PI/60,1,0,0);
-            this.box002[0] =this.box002[0].times(Mat4.translation(0,2,2)).times(model_transform).times(Mat4.translation(0,-2,-2));
-            this.box012[0] =this.box012[0].times(Mat4.translation(0,2,0)).times(model_transform).times(Mat4.translation(0,-2,0));
-            this.box022[0] =this.box022[0].times(Mat4.translation(0,2,-2)).times(model_transform).times(Mat4.translation(0,-2,2));
-            this.box102[0] =this.box102[0].times(Mat4.translation(0,0,2)).times(model_transform).times(Mat4.translation(0,0,-2));
-            this.box112[0] =this.box112[0].times(model_transform);
-            this.box122[0] =this.box122[0].times(Mat4.translation(0,0,-2)).times(model_transform).times(Mat4.translation(0,0,2));
-            this.box202[0] =this.box202[0].times(Mat4.translation(0,-2,2)).times(model_transform).times(Mat4.translation(0,2,-2));
-            this.box212[0] =this.box212[0].times(Mat4.translation(0,-2,0)).times(model_transform).times(Mat4.translation(0,2,0));
-            this.box222[0] =this.box222[0].times(Mat4.translation(0,-2,-2)).times(model_transform).times(Mat4.translation(0,2,2));
+            let model_transform = Mat4.rotation(Math.PI / 60, 1, 0, 0);
+            this.box002[0] = this.box002[0].times(Mat4.translation(0, 2, 2)).times(model_transform).times(Mat4.translation(0, -2, -2));
+            this.box012[0] = this.box012[0].times(Mat4.translation(0, 2, 0)).times(model_transform).times(Mat4.translation(0, -2, 0));
+            this.box022[0] = this.box022[0].times(Mat4.translation(0, 2, -2)).times(model_transform).times(Mat4.translation(0, -2, 2));
+            this.box102[0] = this.box102[0].times(Mat4.translation(0, 0, 2)).times(model_transform).times(Mat4.translation(0, 0, -2));
+            this.box112[0] = this.box112[0].times(model_transform);
+            this.box122[0] = this.box122[0].times(Mat4.translation(0, 0, -2)).times(model_transform).times(Mat4.translation(0, 0, 2));
+            this.box202[0] = this.box202[0].times(Mat4.translation(0, -2, 2)).times(model_transform).times(Mat4.translation(0, 2, -2));
+            this.box212[0] = this.box212[0].times(Mat4.translation(0, -2, 0)).times(model_transform).times(Mat4.translation(0, 2, 0));
+            this.box222[0] = this.box222[0].times(Mat4.translation(0, -2, -2)).times(model_transform).times(Mat4.translation(0, 2, 2));
             if (this.bound4 == 30) {
                 this.rotate_right = false;
                 this.bound4 = 0;
@@ -263,16 +268,16 @@ export class Assignment3 extends Scene {
         }
         if (this.rotate_front && this.bound2 == 0 && this.bound3 == 0 && this.bound4 == 0 && this.bound1 == 0 && this.bound6 == 0) {
             this.bound5 += 1;
-            let model_transform = Mat4.rotation(Math.PI/60,0,0,1);
-            this.box020[0] =this.box020[0].times(Mat4.translation(2,2,0)).times(model_transform).times(Mat4.translation(-2,-2,0));
-            this.box021[0] =this.box021[0].times(Mat4.translation(0,2,0)).times(model_transform).times(Mat4.translation(0,-2,0));
-            this.box022[0] =this.box022[0].times(Mat4.translation(-2,2,0)).times(model_transform).times(Mat4.translation(2,-2,0));
-            this.box120[0] =this.box120[0].times(Mat4.translation(2,0,0)).times(model_transform).times(Mat4.translation(-2,0,0));
-            this.box121[0] =this.box121[0].times(model_transform);
-            this.box122[0] =this.box122[0].times(Mat4.translation(-2,0,0)).times(model_transform).times(Mat4.translation(2,0,0));
-            this.box220[0] =this.box220[0].times(Mat4.translation(2,-2,0)).times(model_transform).times(Mat4.translation(-2,2,0));
-            this.box221[0] =this.box221[0].times(Mat4.translation(0,-2,0)).times(model_transform).times(Mat4.translation(0,2,0));
-            this.box222[0] =this.box222[0].times(Mat4.translation(-2,-2,0)).times(model_transform).times(Mat4.translation(2,2,0));
+            let model_transform = Mat4.rotation(Math.PI / 60, 0, 0, 1);
+            this.box020[0] = this.box020[0].times(Mat4.translation(2, 2, 0)).times(model_transform).times(Mat4.translation(-2, -2, 0));
+            this.box021[0] = this.box021[0].times(Mat4.translation(0, 2, 0)).times(model_transform).times(Mat4.translation(0, -2, 0));
+            this.box022[0] = this.box022[0].times(Mat4.translation(-2, 2, 0)).times(model_transform).times(Mat4.translation(2, -2, 0));
+            this.box120[0] = this.box120[0].times(Mat4.translation(2, 0, 0)).times(model_transform).times(Mat4.translation(-2, 0, 0));
+            this.box121[0] = this.box121[0].times(model_transform);
+            this.box122[0] = this.box122[0].times(Mat4.translation(-2, 0, 0)).times(model_transform).times(Mat4.translation(2, 0, 0));
+            this.box220[0] = this.box220[0].times(Mat4.translation(2, -2, 0)).times(model_transform).times(Mat4.translation(-2, 2, 0));
+            this.box221[0] = this.box221[0].times(Mat4.translation(0, -2, 0)).times(model_transform).times(Mat4.translation(0, 2, 0));
+            this.box222[0] = this.box222[0].times(Mat4.translation(-2, -2, 0)).times(model_transform).times(Mat4.translation(2, 2, 0));
             if (this.bound5 == 30) {
                 this.rotate_front = false;
                 this.bound5 = 0;
@@ -291,16 +296,16 @@ export class Assignment3 extends Scene {
         }
         if (this.rotate_back && this.bound2 == 0 && this.bound3 == 0 && this.bound4 == 0 && this.bound5 == 0 && this.bound1 == 0) {
             this.bound6 += 1;
-            let model_transform = Mat4.rotation(Math.PI/60,0,0,1);
-            this.box000[0] =this.box000[0].times(Mat4.translation(2,2,0)).times(model_transform).times(Mat4.translation(-2,-2,0));
-            this.box001[0] =this.box001[0].times(Mat4.translation(0,2,0)).times(model_transform).times(Mat4.translation(0,-2,0));
-            this.box002[0] =this.box002[0].times(Mat4.translation(-2,2,0)).times(model_transform).times(Mat4.translation(2,-2,0));
-            this.box100[0] =this.box100[0].times(Mat4.translation(2,0,0)).times(model_transform).times(Mat4.translation(-2,0,0));
-            this.box101[0] =this.box101[0].times(model_transform);
-            this.box102[0] =this.box102[0].times(Mat4.translation(-2,0,0)).times(model_transform).times(Mat4.translation(2,0,0));
-            this.box200[0] =this.box200[0].times(Mat4.translation(2,-2,0)).times(model_transform).times(Mat4.translation(-2,2,0));
-            this.box201[0] =this.box201[0].times(Mat4.translation(0,-2,0)).times(model_transform).times(Mat4.translation(0,2,0));
-            this.box202[0] =this.box202[0].times(Mat4.translation(-2,-2,0)).times(model_transform).times(Mat4.translation(2,2,0));
+            let model_transform = Mat4.rotation(Math.PI / 60, 0, 0, 1);
+            this.box000[0] = this.box000[0].times(Mat4.translation(2, 2, 0)).times(model_transform).times(Mat4.translation(-2, -2, 0));
+            this.box001[0] = this.box001[0].times(Mat4.translation(0, 2, 0)).times(model_transform).times(Mat4.translation(0, -2, 0));
+            this.box002[0] = this.box002[0].times(Mat4.translation(-2, 2, 0)).times(model_transform).times(Mat4.translation(2, -2, 0));
+            this.box100[0] = this.box100[0].times(Mat4.translation(2, 0, 0)).times(model_transform).times(Mat4.translation(-2, 0, 0));
+            this.box101[0] = this.box101[0].times(model_transform);
+            this.box102[0] = this.box102[0].times(Mat4.translation(-2, 0, 0)).times(model_transform).times(Mat4.translation(2, 0, 0));
+            this.box200[0] = this.box200[0].times(Mat4.translation(2, -2, 0)).times(model_transform).times(Mat4.translation(-2, 2, 0));
+            this.box201[0] = this.box201[0].times(Mat4.translation(0, -2, 0)).times(model_transform).times(Mat4.translation(0, 2, 0));
+            this.box202[0] = this.box202[0].times(Mat4.translation(-2, -2, 0)).times(model_transform).times(Mat4.translation(2, 2, 0));
             if (this.bound6 == 30) {
                 this.rotate_back = false;
                 this.bound6 = 0;
@@ -318,8 +323,8 @@ export class Assignment3 extends Scene {
             }
         }
         for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++){
-                for (let k = 0; k < 3; k++){
+            for (let j = 0; j < 3; j++) {
+                for (let k = 0; k < 3; k++) {
                     this.shapes.cube.draw(context, program_state, this.cubes[i][j][k][0], this.materials.test.override(this.cubes[i][j][k][1]));
                 }
             }
@@ -359,14 +364,16 @@ export class Assignment3 extends Scene {
 
         program_state.projection_transform = Mat4.perspective(
             Math.PI / 4, context.width / context.height, .1, 1000);
-        
+
         // Lighting
-        const light_position = vec4(0, 5, 5, 1);
-        program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 1000)];
+        const light_position1 = vec4(0, 10, 5, 1);
+        const light_position2 = vec4(0, -10, 5, 1);
+
+        program_state.lights = [new Light(light_position1, color(1, 1, 1, 1), 100), new Light(light_position2, color(1, 1, 1, 1), 100)];
 
         // Drawing
-        let model_transform = Mat4.identity().times(Mat4.translation(-1,-1,-1));
-        
+        let model_transform = Mat4.identity().times(Mat4.translation(-1, -1, -1));
+
         // Shuffle
         if (this.shuffle_flag == 1 && this.bound1 == 0 && this.bound2 == 0 && this.bound3 == 0 && this.bound4 == 0 && this.bound5 == 0 && this.bound6 == 0) {
             this.shuffle();
