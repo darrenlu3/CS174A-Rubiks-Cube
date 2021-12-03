@@ -4,6 +4,8 @@ const {
     Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene,
 } = tiny;
 
+const { Funny_Shader } = defs;
+
 class Cube extends Shape {
     constructor() {
         super("position", "normal");
@@ -99,6 +101,7 @@ export class PuzzleCube extends Scene {
         this.rotate_back = false;
         this.shuffle_flag = false;
         this.shuffle_count = 0;
+        this.moved = false;
         this.bound1 = 0;
         this.bound2 = 0;
         this.bound3 = 0;
@@ -149,6 +152,43 @@ export class PuzzleCube extends Scene {
         this.box220[0] = Mat4.identity().times(Mat4.translation(0, 4, 4));
         this.box221[0] = Mat4.identity().times(Mat4.translation(2, 4, 4));
         this.box222[0] = Mat4.identity().times(Mat4.translation(4, 4, 4));
+        this.moved = true;
+    }
+
+
+    check_solved(){
+        console.log(JSON.stringify(this.box001[1].map(Number)), JSON.stringify(color(0, 0, 1, 1).map(Number)), JSON.stringify(this.box001[1].map(Number)) == JSON.stringify(color(0, 0, 1, 1).map(Number)))
+        ;
+        if (JSON.stringify(this.box000[1].map(Number)) == JSON.stringify(color(0.1, 0.1, 0.1, 1).map(Number)) &&
+        (JSON.stringify(this.box001[1].map(Number)) == JSON.stringify(color(0, 0, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box002[1].map(Number)) == JSON.stringify(color(0, 0, 2, 1).map(Number))) &&
+        (JSON.stringify(this.box010[1].map(Number)) == JSON.stringify(color(0, 1, 0, 1).map(Number))) &&
+        (JSON.stringify(this.box011[1].map(Number)) == JSON.stringify(color(0, 1, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box012[1].map(Number)) == JSON.stringify(color(0, 1, 2, 1).map(Number))) &&
+        (JSON.stringify(this.box020[1].map(Number)) == JSON.stringify(color(0, 2, 0, 1).map(Number))) &&
+        (JSON.stringify(this.box021[1].map(Number)) == JSON.stringify(color(0, 2, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box022[1].map(Number)) == JSON.stringify(color(0, 2, 2, 1).map(Number))) &&
+        (JSON.stringify(this.box100[1].map(Number)) == JSON.stringify(color(1, 0, 0, 1).map(Number))) &&
+        (JSON.stringify(this.box101[1].map(Number)) == JSON.stringify(color(1, 0, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box102[1].map(Number)) == JSON.stringify(color(1, 0, 2, 1).map(Number))) &&
+        (JSON.stringify(this.box110[1].map(Number)) == JSON.stringify(color(1, 1, 0, 1).map(Number))) &&
+        (JSON.stringify(this.box111[1].map(Number)) == JSON.stringify(color(1, 1, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box112[1].map(Number)) == JSON.stringify(color(1, 1, 2, 1).map(Number))) &&
+        (JSON.stringify(this.box120[1].map(Number)) == JSON.stringify(color(1, 2, 0, 1).map(Number))) &&
+        (JSON.stringify(this.box121[1].map(Number)) == JSON.stringify(color(1, 2, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box122[1].map(Number)) == JSON.stringify(color(1, 2, 2, 1).map(Number))) &&
+        (JSON.stringify(this.box200[1].map(Number)) == JSON.stringify(color(2, 0, 0, 1).map(Number))) &&
+        (JSON.stringify(this.box201[1].map(Number)) == JSON.stringify(color(2, 0, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box202[1].map(Number)) == JSON.stringify(color(2, 0, 2, 1).map(Number))) &&
+        (JSON.stringify(this.box210[1].map(Number)) == JSON.stringify(color(2, 1, 0, 1).map(Number))) &&
+        (JSON.stringify(this.box211[1].map(Number)) == JSON.stringify(color(2, 1, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box212[1].map(Number)) == JSON.stringify(color(2, 1, 2, 1).map(Number))) &&
+        (JSON.stringify(this.box220[1].map(Number)) == JSON.stringify(color(2, 2, 0, 1).map(Number))) &&
+        (JSON.stringify(this.box221[1].map(Number)) == JSON.stringify(color(2, 2, 1, 1).map(Number))) &&
+        (JSON.stringify(this.box222[1].map(Number)) == JSON.stringify(color(2, 2, 2, 1).map(Number)))){
+            return 1;
+        }
+        return 0;
     }
 
     draw_cube(context, program_state, model_transform, index) {
@@ -329,8 +369,12 @@ export class PuzzleCube extends Scene {
                 }
             }
         }
+        if (this.moved && this.check_solved() == 1){
+            alert("Solved!")
+            this.moved = false;
+        };
     }
-
+    
     shuffle() {
         let side = Math.floor(Math.random() * 6);
         if (side == 0) {
@@ -387,3 +431,6 @@ export class PuzzleCube extends Scene {
     }
 }
 
+class Cube_Shader extends Shader {
+
+}
